@@ -10,6 +10,7 @@ public class Validator {
     public Validator() {
     }
 
+
     public boolean numbers(String input) {
         return Pattern.matches(this.patterNumbers, input);
     }
