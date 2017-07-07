@@ -1,17 +1,15 @@
 
-import MyCode.NewValidator;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import MyCode.Validator;
-import MyCode.NewValidator;
+
 import java.io.IOException;
 
 public class Tests {
 
     Validator myValidator;
-    NewValidator myNewValidator;
     @DataProvider(name = "TestData")
     public Object[][] createData() {
         return new Object[][]{
@@ -35,10 +33,10 @@ public class Tests {
     @DataProvider(name = "TestIP")
     public Object[][] createIP() {
         return new Object[][]{
-                {"192.168.0.33", Boolean.TRUE},
-                {"192.168.0.444", Boolean.TRUE},
-                {"192.168.0.33", Boolean.TRUE},
-                {"192.168.0.2", Boolean.TRUE}
+                {"192.168.0.33,192.168.0.44", Boolean.TRUE},
+                {"192.168.0.44", Boolean.TRUE},
+                {"gaegsertg",Boolean.FALSE}
+
         };
     }
 
@@ -49,7 +47,6 @@ public class Tests {
     void setUp() throws IOException {
         System.out.println("Created Object");
         myValidator = new Validator();
-        myNewValidator = new NewValidator();
     }
 
     @Test(dataProvider = "TestData", description = "Test for Numbers Validation")
@@ -64,10 +61,11 @@ public class Tests {
         Assert.assertEquals((Boolean) myValidator.emails(testEmail), expectedGmail);
     }
 
-    @Test(dataProvider = "TestIP")
-    void IPCheck(String testIP, Boolean expectedIP) throws IOException {
-        System.out.println(testIP);
-        Assert.assertTrue((Boolean) myNewValidator.NewCoolValidator(testIP), expectedIP);
+    @Test(dataProvider = "TestIP", description = "Test")
+    void IPCheck(String testMyIP, Boolean expectedIP) throws IOException {
+        System.out.println(testMyIP);
+        Assert.assertEquals( (Boolean) myValidator.NewCoolValidator(testMyIP), expectedIP);
+
 
     }
 
